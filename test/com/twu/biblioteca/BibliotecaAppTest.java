@@ -44,9 +44,9 @@ public class BibliotecaAppTest {
     public void should_print_main_menu() throws Exception {
         StringBuilder mainMenuBuilder = new StringBuilder(" Main Menu \n");
         mainMenuBuilder.append("command | action\n");
-        BibliotecaApp.mainMenu.forEach((key, value) ->
+        app.getMainMenu().forEach((key, value) ->
                 mainMenuBuilder.append(String.format("%s    %s\n", key, value)));
-        BibliotecaApp.printMainMenu();
+        app.printMainMenu();
         assertEquals(mainMenuBuilder.toString(), outputMonitor.toString());
     }
 
@@ -71,7 +71,7 @@ public class BibliotecaAppTest {
 
     @Test
     public void should_make_state_to_be_command_after_checkout_a_book() throws Exception {
-        BibliotecaApp.state = CHECK_OUT_BOOK;
+        app.state = CHECK_OUT_BOOK;
         BibliotecaApp.checkOutBook(library, "book1");
         assertEquals(COMMAND, BibliotecaApp.state);
     }

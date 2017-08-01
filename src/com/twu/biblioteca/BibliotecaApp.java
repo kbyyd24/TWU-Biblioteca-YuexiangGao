@@ -17,11 +17,21 @@ import static com.twu.biblioteca.enums.ConsoleState.*;
 
 public class BibliotecaApp {
 
-    static Map<String, String> mainMenu;
     static ConsoleState state;
 
     static {
         state = COMMAND;
+    }
+
+    private Map<String, String> mainMenu;
+    private BibliotecaLibrary library;
+
+    public BibliotecaApp(BibliotecaLibrary library) {
+        this.library = library;
+        buildMainMenuMap();
+    }
+
+    private void buildMainMenuMap() {
         mainMenu = new HashMap<>();
         mainMenu.put("1", "List Book");
         mainMenu.put("cob", "Check Out Book");
@@ -32,10 +42,8 @@ public class BibliotecaApp {
         mainMenu.put("q", "Quit");
     }
 
-    private BibliotecaLibrary library;
-
-    public BibliotecaApp(BibliotecaLibrary library) {
-        this.library = library;
+    public Map<String, String> getMainMenu() {
+        return mainMenu;
     }
 
     public static void main(String[] args) {
@@ -111,7 +119,7 @@ public class BibliotecaApp {
         System.out.println(Welcome.msg);
     }
 
-    static void printMainMenu() {
+    void printMainMenu() {
         System.out.println(" Main Menu ");
         System.out.println("command | action");
         mainMenu.forEach((key, value) ->
