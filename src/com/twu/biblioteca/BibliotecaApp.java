@@ -24,15 +24,17 @@ public class BibliotecaApp {
     }
 
     private Map<String, String> mainMenu;
+    private Map<String, Command> optionCommandMap;
     private BibliotecaLibrary library;
 
     public BibliotecaApp(BibliotecaLibrary library) {
         this.library = library;
-        buildMainMenuMap();
+        mainMenu = buildMainMenuMap();
+        optionCommandMap = buildOptionCommandMap();
     }
 
-    private void buildMainMenuMap() {
-        mainMenu = new HashMap<>();
+    private Map<String, String> buildMainMenuMap() {
+        Map<String, String> mainMenu = new HashMap<>();
         mainMenu.put("1", "List Book");
         mainMenu.put("cob", "Check Out Book");
         mainMenu.put("rb", "Return Book");
@@ -40,6 +42,19 @@ public class BibliotecaApp {
         mainMenu.put("com", "Check Out Movie");
         mainMenu.put("rm", "Return Movie");
         mainMenu.put("q", "Quit");
+        return mainMenu;
+    }
+
+    private Map<String, Command> buildOptionCommandMap() {
+        Map<String, Command> optionComandMap = new HashMap<>();
+        optionComandMap.put("List Book", new ListBookCommand(library.getBooks()));
+        optionComandMap.put("Check Out Book", new CheckOutBookCommand());
+        optionComandMap.put("Return Book", new ReturnBookCommand());
+        optionComandMap.put("List Movie", new ListMovieCommand(library.getMovies()));
+        optionComandMap.put("Check Out Movie", new CheckOutMovieCommand());
+        optionComandMap.put("Return Movie", new ReturnMovieCommand());
+        optionComandMap.put("Quit", new QuitCommand());
+        return optionComandMap;
     }
 
     public Map<String, String> getMainMenu() {
@@ -84,22 +99,9 @@ public class BibliotecaApp {
         }
     }
 
-    private static Map<String, Command> buildOptionCommandMap(BibliotecaLibrary library) {
-        Map<String, Command> map = new HashMap<>();
-        map.put("List Book", new ListBookCommand(library.getBooks()));
-        map.put("Check Out Book", new CheckOutBookCommand());
-        map.put("Return Book", new ReturnBookCommand());
-        map.put("List Movie", new ListMovieCommand(library.getMovies()));
-        map.put("Check Out Movie", new CheckOutMovieCommand());
-        map.put("Return Movie", new ReturnMovieCommand());
-        map.put("Quit", new QuitCommand());
-        return map;
-    }
-
     CommandResult parseCommand(String input) {
         String option = mainMenu.compute(input, (command, opt) -> opt == null ? "Invalid Option" : opt);
-        Map<String, Command> stringCommandMap = buildOptionCommandMap(library);
-        return stringCommandMap
+        return optionCommandMap
                 .compute(option, (key, command) ->
                         command == null ? new InvalidOptionCommand() : command).exec();
     }
