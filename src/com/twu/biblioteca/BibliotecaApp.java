@@ -108,19 +108,6 @@ public class BibliotecaApp {
                         command == null ? new InvalidOptionCommand() : command).exec();
     }
 
-    static void printCheckOutResult(boolean result) {
-        System.out.println(result ?
-                "Thank you! Enjoy the book" :
-                "That book is not available");
-    }
-
-    CommandResult checkOutBook(String bookName) {
-        return new CommandResult(COMMAND,
-                library.checkOutBook(bookName) ?
-                        CHECK_OUT_BOOK_SUCCESS :
-                        CHECK_OUT_BOOK_FAIL);
-    }
-
     void printWelcome() {
         System.out.println(Welcome.msg);
     }
@@ -132,17 +119,18 @@ public class BibliotecaApp {
                 System.out.println(String.format("%s    %s", key, value)));
     }
 
+    CommandResult checkOutBook(String bookName) {
+        return new CommandResult(COMMAND,
+                library.checkOutBook(bookName) ?
+                        CHECK_OUT_BOOK_SUCCESS :
+                        CHECK_OUT_BOOK_FAIL);
+    }
+
     CommandResult returnBook(String bookName) {
         return new CommandResult(COMMAND,
                 library.returnBook(bookName) ?
                         RETURN_BOOK_SUCCESS :
                         RETURN_BOOK_FAIL);
-    }
-
-    static void printReturnBookResult(boolean result) {
-        System.out.println(result ?
-                "Thank you for returning the book." :
-                "That is not a valid book to return");
     }
 
     CommandResult checkOutMovie(String movieName) {
@@ -152,12 +140,6 @@ public class BibliotecaApp {
                         CHECK_OUT_MOVIE_FAIL);
     }
 
-    static void printCheckOutMovieResult(boolean result) {
-        System.out.println(result ?
-                "Thank you! Enjoy the movie!" :
-                "That movie is not available!");
-    }
-
     CommandResult returnMovie(String movieName) {
         return new CommandResult(COMMAND,
                 library.returnMovie(movieName) ?
@@ -165,9 +147,4 @@ public class BibliotecaApp {
                         RETURN_MOVIE_FAIL);
     }
 
-    static void printReturnMovieResult(boolean result) {
-        System.out.println(result ?
-                "Thank you for returning the movie." :
-                "That is not a valid movie to return.");
-    }
 }
