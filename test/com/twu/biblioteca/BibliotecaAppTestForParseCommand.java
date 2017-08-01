@@ -34,7 +34,7 @@ public class BibliotecaAppTestForParseCommand {
                 .filter(book -> !book.isCheckOut())
                 .map(Book::loadDetail)
                 .forEach(detail -> listStr.append(detail).append('\n'));
-        CommandResult result = app.parseCommand("1");
+        CommandResult result = app.parseCommand("lb");
         assertEquals(COMMAND, result.getState());
         assertEquals(listStr.toString(), result.getDisplayMsg());
     }

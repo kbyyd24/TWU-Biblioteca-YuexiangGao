@@ -32,7 +32,7 @@ public class BibliotecaApp {
 
     private Map<String, String> buildMainMenuMap() {
         Map<String, String> mainMenu = new HashMap<>();
-        mainMenu.put("1", "List Book");
+        mainMenu.put("lb", "List Book");
         mainMenu.put("cob", "Check Out Book");
         mainMenu.put("rb", "Return Book");
         mainMenu.put("lm", "List Movie");
