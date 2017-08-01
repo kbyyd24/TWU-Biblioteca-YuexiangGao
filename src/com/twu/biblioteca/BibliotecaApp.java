@@ -1,12 +1,15 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.enums.ConsoleDisplay;
 import com.twu.biblioteca.enums.ConsoleState;
 import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.CommandResult;
 import com.twu.biblioteca.model.Movie;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.twu.biblioteca.enums.ConsoleDisplay.*;
 import static com.twu.biblioteca.enums.ConsoleState.*;
 
 public class BibliotecaApp {
@@ -34,56 +37,84 @@ public class BibliotecaApp {
         while (scanner.hasNext()) {
             String input = scanner.nextLine();
             if (state == COMMAND) {
-                if (!parseCommand(library, input)) break;
-                if (state == COMMAND) {
-                    printMainMenu();
-                }
+                CommandResult result = parseCommand(library, input);
+                state = result.getState();
+                System.out.println(result.getDisplayMsg());
             } else if (state == CHECK_OUT_BOOK) {
                 printCheckOutResult(checkOutBook(library, input));
-                printMainMenu();
             } else if (state == RETURN_BOOK) {
                 printReturnBookResult(returnBook(library, input));
-                printMainMenu();
             } else if (state == CHECK_OUT_MOVIE) {
                 printCheckOutMovieResult(checkOutMovie(library, input));
-                printMainMenu();
             } else if (state == RETURN_MOVIE) {
                 printReturnMovieResult(returnMovie(library, input));
+            }
+            if (state == COMMAND) {
                 printMainMenu();
+            } else if (state == QUIT) {
+                break;
             }
         }
         scanner.close();
     }
 
-    static boolean parseCommand(BibliotecaLibrary library, String input) {
+    static CommandResult parseCommand(BibliotecaLibrary library, String input) {
+        ConsoleState nextState = null;
+        String displayMessage = null;
         String option = mainMenu.get(input);
         if (option == null) {
-            printInvalidOptoinNotification();
+            nextState = COMMAND;
+            displayMessage = INVALID_NOTICE_MSG.getMsg();
         } else {
             switch (option) {
                 case "List Book":
-                    printBookList(library);
+                    nextState = COMMAND;
+                    displayMessage = buildBookList(library.getBooks());
                     break;
                 case "Check Out Book":
-                    state = CHECK_OUT_BOOK;
+                    nextState = CHECK_OUT_BOOK;
+                    displayMessage = CHECK_OUT_BOOK_MSG.getMsg();
                     break;
                 case "Return Book":
-                    state = RETURN_BOOK;
+                    nextState = RETURN_BOOK;
+                    displayMessage = RETURN_BOOK_MSG.getMsg();
                     break;
                 case "List Movie":
-                    printMovieList(library);
+                    nextState = COMMAND;
+                    displayMessage = buildMovieList(library.getMovies());
                     break;
                 case "Check Out Movie":
-                    state = CHECK_OUT_MOVIE;
+                    nextState = CHECK_OUT_MOVIE;
+                    displayMessage = CHECK_OUT_MOVIE_MSG.getMsg();
                     break;
                 case "Return Movie":
-                    state = RETURN_MOVIE;
+                    nextState = RETURN_MOVIE;
+                    displayMessage = RETURN_MOVIE_MSG.getMsg();
                     break;
                 case "Quit":
-                    return false;
+                    nextState = QUIT;
+                    displayMessage = QUIT_MSG.getMsg();
             }
         }
-        return true;
+        return new CommandResult(nextState, displayMessage);
+    }
+
+    private static String buildBookList(List<Book> books) {
+        StringBuilder builder = new StringBuilder();
+        books.stream()
+                .filter(book -> !book.isCheckOut())
+                .map(Book::loadDetail)
+                .forEach(detail -> builder.append(detail).append('\n'));
+        return builder.toString();
+    }
+
+    private static String buildMovieList(List<Movie> movies) {
+        StringBuilder builder = new StringBuilder();
+        movies.stream()
+                .filter(movie -> !movie.isCheckOut())
+                .map(Movie::loadDetail)
+                .forEach(detail -> builder.append(detail).append('\n'));
+        return builder.toString();
     }
 
     private static void printMovieList(BibliotecaLibrary library) {
