@@ -78,16 +78,22 @@ public class BibliotecaApp {
 
     private void parseInput(String input) {
         CommandResult result = new CommandResult(COMMAND, "");
-        if (state == COMMAND) {
-            result = parseCommand(input);
-        } else if (state == CHECK_OUT_BOOK) {
-            result = checkOutBook(input);
-        } else if (state == RETURN_BOOK) {
-            result = returnBook(input);
-        } else if (state == CHECK_OUT_MOVIE) {
-            result = checkOutMovie(input);
-        } else if (state == RETURN_MOVIE) {
-            result = returnMovie(input);
+        switch (state) {
+            case COMMAND:
+                result = parseCommand(input);
+                break;
+            case CHECK_OUT_BOOK:
+                result = checkOutBook(input);
+                break;
+            case RETURN_BOOK:
+                result = returnBook(input);
+                break;
+            case CHECK_OUT_MOVIE:
+                result = checkOutMovie(input);
+                break;
+            case RETURN_MOVIE:
+                result = returnMovie(input);
+                break;
         }
         state = result.getState();
         System.out.println(result.getDisplayMsg());
