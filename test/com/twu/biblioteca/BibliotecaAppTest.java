@@ -99,36 +99,15 @@ public class BibliotecaAppTest {
 
 
 
-    @Test
-    public void should_change_movie_isCheckOut_to_true_when_check_out_movie_success() throws Exception {
-        library.getMovies().get(0).setCheckOut(true);
-        BibliotecaApp.checkOutMovie(library, "movie1");
-        assertTrue(library.getMovies().get(0).isCheckOut());
-    }
 
-    @Test
-    public void should_return_true_when_check_out_movie_success() throws Exception {
-        assertTrue(BibliotecaApp.checkOutMovie(library, "movie1"));
-    }
 
-    @Test
-    public void should_return_false_when_check_out_movie_failed() throws Exception {
-        assertFalse(BibliotecaApp.checkOutMovie(library, "movieName"));
-    }
 
-    @Test
-    public void should_change_state_to_command_when_check_out_movie_success() throws Exception {
-        BibliotecaApp.state = CHECK_OUT_MOVIE;
-        BibliotecaApp.checkOutMovie(library, "movie1");
-        assertEquals(COMMAND, BibliotecaApp.state);
-    }
 
-    @Test
-    public void should_change_state_to_command_when_check_out_movie_failed() throws Exception {
-        BibliotecaApp.state = CHECK_OUT_MOVIE;
-        BibliotecaApp.checkOutMovie(library, "movieName");
-        assertEquals(COMMAND, BibliotecaApp.state);
-    }
+
+
+
+
+
 
     @Test
     public void should_print_successful_message_when_check_out_movie_result_is_true() throws Exception {

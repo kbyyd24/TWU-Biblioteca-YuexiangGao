@@ -98,7 +98,9 @@ public class BibliotecaApp {
             state = result.getState();
             System.out.println(result.getDisplayMsg());
         } else if (state == CHECK_OUT_MOVIE) {
-            printCheckOutMovieResult(checkOutMovie(library, input));
+            CommandResult result = checkOutMovie(input);
+            state = result.getState();
+            System.out.println(result.getDisplayMsg());
         } else if (state == RETURN_MOVIE) {
             printReturnMovieResult(returnMovie(library, input));
         }
@@ -119,7 +121,9 @@ public class BibliotecaApp {
 
     CommandResult checkOutBook(String bookName) {
         return new CommandResult(COMMAND,
-                library.checkOutBook(bookName) ? CHECK_OUT_BOOK_SUCCESS : CHECK_OUT_BOOK_FAIL);
+                library.checkOutBook(bookName) ?
+                        CHECK_OUT_BOOK_SUCCESS :
+                        CHECK_OUT_BOOK_FAIL);
     }
 
     void printWelcome() {
@@ -135,7 +139,9 @@ public class BibliotecaApp {
 
     CommandResult returnBook(String bookName) {
         return new CommandResult(COMMAND,
-                library.returnBook(bookName) ? RETURN_BOOK_SUCCESS : RETURN_BOOK_FAIL);
+                library.returnBook(bookName) ?
+                        RETURN_BOOK_SUCCESS :
+                        RETURN_BOOK_FAIL);
     }
 
     static void printReturnBookResult(boolean result) {
@@ -144,9 +150,11 @@ public class BibliotecaApp {
                 "That is not a valid book to return");
     }
 
-    static boolean checkOutMovie(BibliotecaLibrary library, String movieName) {
-        state = COMMAND;
-        return library.checkOutMovie(movieName);
+    CommandResult checkOutMovie(String movieName) {
+        return new CommandResult(COMMAND,
+                library.checkOutMovie(movieName) ?
+                        CHECK_OUT_MOVIE_SUCCESS :
+                        CHECK_OUT_MOVIE_FAIL);
     }
 
     static void printCheckOutMovieResult(boolean result) {
