@@ -3,15 +3,11 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.command.*;
 import com.twu.biblioteca.config.Welcome;
 import com.twu.biblioteca.enums.ConsoleState;
-import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.CommandResult;
-import com.twu.biblioteca.model.Movie;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import static com.twu.biblioteca.config.OptionResultMessage.*;
 import static com.twu.biblioteca.enums.ConsoleState.*;

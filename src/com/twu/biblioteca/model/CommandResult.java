@@ -1,6 +1,5 @@
 package com.twu.biblioteca.model;
 
-import com.twu.biblioteca.enums.ConsoleDisplay;
 import com.twu.biblioteca.enums.ConsoleState;
 
 public class CommandResult {

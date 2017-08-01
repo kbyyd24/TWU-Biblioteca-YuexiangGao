@@ -1,6 +1,5 @@
 package com.twu.biblioteca.command;
 
-import com.twu.biblioteca.enums.ConsoleState;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.CommandResult;
 
