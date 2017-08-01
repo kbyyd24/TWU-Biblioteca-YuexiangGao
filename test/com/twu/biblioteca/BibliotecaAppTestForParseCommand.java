@@ -80,14 +80,14 @@ public class BibliotecaAppTestForParseCommand {
     @Test
     public void should_return_COMMAND_state_and_invalid_notice_when_choose_an_invalid_option() throws Exception {
         CommandResult expectResult = new CommandResult(COMMAND, ConsoleDisplay.INVALID_NOTICE_MSG.getMsg());
-        CommandResult result = BibliotecaApp.parseCommand(null, "invalid option");
+        CommandResult result = BibliotecaApp.parseCommand(library, "invalid option");
         assertEquals(expectResult, result);
     }
 
     @Test
     public void should_return_QUIT_state_and_message_when_choose_quit_option() throws Exception {
         CommandResult expectResult = new CommandResult(QUIT, ConsoleDisplay.QUIT_MSG.getMsg());
-        CommandResult result = BibliotecaApp.parseCommand(null, "q");
+        CommandResult result = BibliotecaApp.parseCommand(library, "q");
         assertEquals(expectResult, result);
     }
 

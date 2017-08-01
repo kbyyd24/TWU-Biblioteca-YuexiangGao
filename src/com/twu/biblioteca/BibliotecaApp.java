@@ -59,29 +59,24 @@ public class BibliotecaApp {
         scanner.close();
     }
 
+    private static Map<String, Command> buildOptionCommandMap(BibliotecaLibrary library) {
+        Map<String, Command> map = new HashMap<>();
+        map.put("List Book", new ListBookCommand(library.getBooks()));
+        map.put("Check Out Book", new CheckOutBookCommand());
+        map.put("Return Book", new ReturnBookCommand());
+        map.put("List Movie", new ListMovieCommand(library.getMovies()));
+        map.put("Check Out Movie", new CheckOutMovieCommand());
+        map.put("Return Movie", new ReturnMovieCommand());
+        map.put("Quit", new QuitCommand());
+        return map;
+    }
+
     static CommandResult parseCommand(BibliotecaLibrary library, String input) {
-        String option = mainMenu.get(input);
-        if (option == null) {
-            return new InvalidOptionCommand().exec();
-        } else {
-            switch (option) {
-                case "List Book":
-                    return new ListBookCommand(library.getBooks()).exec();
-                case "Check Out Book":
-                    return new CheckOutBookCommand().exec();
-                case "Return Book":
-                    return new ReturnBookCommand().exec();
-                case "List Movie":
-                    return new ListMovieCommand(library.getMovies()).exec();
-                case "Check Out Movie":
-                    return new CheckOutMovieCommand().exec();
-                case "Return Movie":
-                    return new ReturnMovieCommand().exec();
-                case "Quit":
-                    return new QuitCommand().exec();
-            }
-        }
-        return null;
+        String option = mainMenu.compute(input, (command, opt) -> opt == null ? "Invalid Option" : opt);
+        Map<String, Command> stringCommandMap = buildOptionCommandMap(library);
+        return stringCommandMap
+                .compute(option, (key, command) ->
+                        command == null ? new InvalidOptionCommand() : command).exec();
     }
 
     private static String buildBookList(List<Book> books) {
