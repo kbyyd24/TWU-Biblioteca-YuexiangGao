@@ -8,6 +8,8 @@ import com.twu.biblioteca.model.CommandResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static com.twu.biblioteca.config.OptionResultMessage.*;
 import static com.twu.biblioteca.enums.ConsoleState.*;
@@ -17,6 +19,7 @@ public class BibliotecaApp {
     private ConsoleState state;
     private Map<String, String> mainMenu;
     private Map<String, Command> optionCommandMap;
+    private Map<ConsoleState, Function<String, CommandResult>> parseInputMap;
     private BibliotecaLibrary library;
 
     public BibliotecaApp(BibliotecaLibrary library) {
@@ -24,6 +27,7 @@ public class BibliotecaApp {
         this.library = library;
         mainMenu = buildMainMenuMap();
         optionCommandMap = buildOptionCommandMap();
+        parseInputMap = buildParseInputMap();
     }
 
     private Map<String, String> buildMainMenuMap() {
@@ -48,6 +52,16 @@ public class BibliotecaApp {
         optionComandMap.put("Return Movie", new ReturnMovieCommand());
         optionComandMap.put("Quit", new QuitCommand());
         return optionComandMap;
+    }
+
+    private Map<ConsoleState, Function<String, CommandResult>> buildParseInputMap() {
+        Map<ConsoleState, Function<String, CommandResult>> map = new HashMap<>();
+        map.put(COMMAND, this::parseCommand);
+        map.put(CHECK_OUT_BOOK, this::checkOutBook);
+        map.put(RETURN_BOOK, this::returnBook);
+        map.put(CHECK_OUT_MOVIE, this::checkOutMovie);
+        map.put(RETURN_MOVIE, this::returnMovie);
+        return map;
     }
 
     public Map<String, String> getMainMenu() {
@@ -77,24 +91,7 @@ public class BibliotecaApp {
     }
 
     private void parseInput(String input) {
-        CommandResult result = new CommandResult(COMMAND, "");
-        switch (state) {
-            case COMMAND:
-                result = parseCommand(input);
-                break;
-            case CHECK_OUT_BOOK:
-                result = checkOutBook(input);
-                break;
-            case RETURN_BOOK:
-                result = returnBook(input);
-                break;
-            case CHECK_OUT_MOVIE:
-                result = checkOutMovie(input);
-                break;
-            case RETURN_MOVIE:
-                result = returnMovie(input);
-                break;
-        }
+        CommandResult result = parseInputMap.get(state).apply(input);
         state = result.getState();
         System.out.println(result.getDisplayMsg());
     }
