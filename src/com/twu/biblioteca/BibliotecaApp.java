@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.command.*;
 import com.twu.biblioteca.enums.ConsoleDisplay;
 import com.twu.biblioteca.enums.ConsoleState;
 import com.twu.biblioteca.model.Book;
@@ -59,44 +60,28 @@ public class BibliotecaApp {
     }
 
     static CommandResult parseCommand(BibliotecaLibrary library, String input) {
-        ConsoleState nextState = null;
-        String displayMessage = null;
         String option = mainMenu.get(input);
         if (option == null) {
-            nextState = COMMAND;
-            displayMessage = INVALID_NOTICE_MSG.getMsg();
+            return new InvalidOptionCommand().exec();
         } else {
             switch (option) {
                 case "List Book":
-                    nextState = COMMAND;
-                    displayMessage = buildBookList(library.getBooks());
-                    break;
+                    return new ListBookCommand(library.getBooks()).exec();
                 case "Check Out Book":
-                    nextState = CHECK_OUT_BOOK;
-                    displayMessage = CHECK_OUT_BOOK_MSG.getMsg();
-                    break;
+                    return new CheckOutBookCommand().exec();
                 case "Return Book":
-                    nextState = RETURN_BOOK;
-                    displayMessage = RETURN_BOOK_MSG.getMsg();
-                    break;
+                    return new ReturnBookCommand().exec();
                 case "List Movie":
-                    nextState = COMMAND;
-                    displayMessage = buildMovieList(library.getMovies());
-                    break;
+                    return new ListMovieCommand(library.getMovies()).exec();
                 case "Check Out Movie":
-                    nextState = CHECK_OUT_MOVIE;
-                    displayMessage = CHECK_OUT_MOVIE_MSG.getMsg();
-                    break;
+                    return new CheckOutMovieCommand().exec();
                 case "Return Movie":
-                    nextState = RETURN_MOVIE;
-                    displayMessage = RETURN_MOVIE_MSG.getMsg();
-                    break;
+                    return new ReturnMovieCommand().exec();
                 case "Quit":
-                    nextState = QUIT;
-                    displayMessage = QUIT_MSG.getMsg();
+                    return new QuitCommand().exec();
             }
         }
-        return new CommandResult(nextState, displayMessage);
+        return null;
     }
 
     private static String buildBookList(List<Book> books) {
