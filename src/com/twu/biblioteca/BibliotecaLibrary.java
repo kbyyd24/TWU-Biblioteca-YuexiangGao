@@ -37,10 +37,6 @@ public class BibliotecaLibrary {
         return books;
     }
 
-    public String getWelcome() {
-        return "Welcome to Yuexiang's Biblioteca";
-    }
-
     public boolean checkOutBook(String bookName) {
         Optional<Book> findBook = books.stream()
                 .filter(book -> !book.isCheckOut() && book.getName().equals(bookName))

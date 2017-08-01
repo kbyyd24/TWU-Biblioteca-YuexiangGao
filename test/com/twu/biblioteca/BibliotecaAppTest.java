@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.config.Welcome;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.Movie;
 import org.junit.After;
@@ -18,11 +19,13 @@ public class BibliotecaAppTest {
 
     private BibliotecaLibrary library;
     private ByteArrayOutputStream outputMonitor = new ByteArrayOutputStream();
+    private BibliotecaApp app;
 
     @Before
     public void setUp() throws Exception {
         System.setOut(new PrintStream(outputMonitor));
         library = new BibliotecaLibrary();
+        app = new BibliotecaApp(library);
     }
 
     @After
@@ -32,8 +35,8 @@ public class BibliotecaAppTest {
 
     @Test
     public void should_print_welcome_message() throws Exception {
-        BibliotecaApp.printWelcome(library);
-        assertEquals(library.getWelcome() + '\n', outputMonitor.toString());
+        app.printWelcome();
+        assertEquals(Welcome.msg + '\n', outputMonitor.toString());
     }
 
     @Test

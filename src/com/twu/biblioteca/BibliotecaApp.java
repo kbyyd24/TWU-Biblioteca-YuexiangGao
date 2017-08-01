@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.command.*;
+import com.twu.biblioteca.config.Welcome;
 import com.twu.biblioteca.enums.ConsoleState;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.CommandResult;
@@ -44,7 +45,7 @@ public class BibliotecaApp {
     }
 
     private void start() {
-        printWelcome(library);
+        printWelcome();
         printMainMenu();
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
@@ -106,8 +107,8 @@ public class BibliotecaApp {
         return library.checkOutBook(bookName);
     }
 
-    static void printWelcome(BibliotecaLibrary library) {
-        System.out.println(library.getWelcome());
+    void printWelcome() {
+        System.out.println(Welcome.msg);
     }
 
     static void printBookList(BibliotecaLibrary library) {
