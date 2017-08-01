@@ -123,24 +123,11 @@ public class BibliotecaAppTest {
 
 
 
-    @Test
-    public void should_return_true_without_anything_printed_when_return_movie_success() throws Exception {
-        String movieName = "movie1";
-        library.checkOutMovie(movieName);
-        assertTrue(BibliotecaApp.returnMovie(library, movieName));
-    }
 
-    @Test
-    public void should_return_false_without_anything_printed_when_return_movie_failed() throws Exception {
-        assertFalse(BibliotecaApp.returnMovie(library, "movie1"));
-    }
 
-    @Test
-    public void should_change_console_state_into_COMMAND_after_return_movie_option() throws Exception {
-        BibliotecaApp.state = RETURN_MOVIE;
-        BibliotecaApp.returnMovie(library, "movieName");
-        assertEquals(COMMAND, BibliotecaApp.state);
-    }
+
+
+
 
     @Test
     public void should_print_successful_message_when_return_movie_success() throws Exception {

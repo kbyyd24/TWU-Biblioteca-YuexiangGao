@@ -85,25 +85,20 @@ public class BibliotecaApp {
     }
 
     private void parseInput(String input) {
+        CommandResult result = new CommandResult(COMMAND, "");
         if (state == COMMAND) {
-            CommandResult result = parseCommand(input);
-            state = result.getState();
-            System.out.println(result.getDisplayMsg());
+            result = parseCommand(input);
         } else if (state == CHECK_OUT_BOOK) {
-            CommandResult result = checkOutBook(input);
-            state = result.getState();
-            System.out.println(result.getDisplayMsg());
+            result = checkOutBook(input);
         } else if (state == RETURN_BOOK) {
-            CommandResult result = returnBook(input);
-            state = result.getState();
-            System.out.println(result.getDisplayMsg());
+            result = returnBook(input);
         } else if (state == CHECK_OUT_MOVIE) {
-            CommandResult result = checkOutMovie(input);
-            state = result.getState();
-            System.out.println(result.getDisplayMsg());
+            result = checkOutMovie(input);
         } else if (state == RETURN_MOVIE) {
-            printReturnMovieResult(returnMovie(library, input));
+            result = returnMovie(input);
         }
+        state = result.getState();
+        System.out.println(result.getDisplayMsg());
     }
 
     CommandResult parseCommand(String input) {
@@ -163,10 +158,11 @@ public class BibliotecaApp {
                 "That movie is not available!");
     }
 
-    static boolean returnMovie(BibliotecaLibrary library, String movieName) {
-        state = COMMAND;
-        return library.returnMovie(movieName);
-
+    CommandResult returnMovie(String movieName) {
+        return new CommandResult(COMMAND,
+                library.returnMovie(movieName) ?
+                        RETURN_MOVIE_SUCCESS :
+                        RETURN_MOVIE_FAIL);
     }
 
     static void printReturnMovieResult(boolean result) {
