@@ -111,16 +111,6 @@ public class BibliotecaApp {
         System.out.println(Welcome.msg);
     }
 
-    static void printBookList(BibliotecaLibrary library) {
-        List<Book> books = library.getBooks().stream().filter(book1 -> !book1.isCheckOut()).collect(Collectors.toList());
-        for (int i = 0; i < books.size(); i++) {
-            Book book = books.get(i);
-            if (!book.isCheckOut()) {
-                System.out.println(String.format("%d. %s", i + 1, book.loadDetail()));
-            }
-        }
-    }
-
     static void printMainMenu() {
         System.out.println(" Main Menu ");
         System.out.println("command | action");

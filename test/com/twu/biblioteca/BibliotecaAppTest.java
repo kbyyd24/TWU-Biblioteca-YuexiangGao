@@ -39,25 +39,6 @@ public class BibliotecaAppTest {
         assertEquals(Welcome.msg + '\n', outputMonitor.toString());
     }
 
-    @Test
-    public void should_print_book_list_without_checked_out_book() throws Exception {
-        List<Book> books = library.getBooks();
-        BibliotecaApp.checkOutBook(library, "book1");
-        StringBuilder listStr = new StringBuilder();
-        books = books.stream().filter(book1 -> !book1.isCheckOut()).collect(Collectors.toList());
-        for (int i = 0; i < books.size(); i++) {
-            Book book = books.get(i);
-            if (!book.isCheckOut()) {
-                listStr.append(String.format("%d. %s\n", i + 1, book.loadDetail()));
-            }
-        }
-        BibliotecaApp.printBookList(library);
-        assertEquals(listStr.toString(), outputMonitor.toString());
-    }
-
-
-
-
 
     @Test
     public void should_print_main_menu() throws Exception {
