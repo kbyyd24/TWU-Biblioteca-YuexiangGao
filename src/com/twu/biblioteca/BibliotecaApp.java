@@ -18,17 +18,13 @@ import static com.twu.biblioteca.enums.ConsoleState.*;
 
 public class BibliotecaApp {
 
-    static ConsoleState state;
-
-    static {
-        state = COMMAND;
-    }
-
+    private ConsoleState state;
     private Map<String, String> mainMenu;
     private Map<String, Command> optionCommandMap;
     private BibliotecaLibrary library;
 
     public BibliotecaApp(BibliotecaLibrary library) {
+        state = COMMAND;
         this.library = library;
         mainMenu = buildMainMenuMap();
         optionCommandMap = buildOptionCommandMap();
