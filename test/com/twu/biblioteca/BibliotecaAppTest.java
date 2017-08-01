@@ -50,17 +50,6 @@ public class BibliotecaAppTest {
         assertEquals(mainMenuBuilder.toString(), outputMonitor.toString());
     }
 
-    @Test
-    public void should_print_invalid_notification() throws Exception {
-        BibliotecaApp.printInvalidOptoinNotification();
-        assertEquals("Select a valid option!\n", outputMonitor.toString());
-    }
-
-
-
-
-
-
 
     @Test
     public void should_make_book_isCheckOut_to_be_true_when_check_out_success() throws Exception {

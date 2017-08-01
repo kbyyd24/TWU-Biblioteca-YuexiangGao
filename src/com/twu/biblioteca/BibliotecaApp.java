@@ -128,10 +128,6 @@ public class BibliotecaApp {
                 System.out.println(String.format("%s    %s", key, value)));
     }
 
-    static void printInvalidOptoinNotification() {
-        System.out.println("Select a valid option!");
-    }
-
     static boolean returnBook(BibliotecaLibrary library, String bookName) {
         state = COMMAND;
         return library.returnBook(bookName);
