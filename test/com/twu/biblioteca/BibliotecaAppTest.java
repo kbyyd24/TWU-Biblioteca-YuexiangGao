@@ -51,35 +51,15 @@ public class BibliotecaAppTest {
     }
 
 
-    @Test
-    public void should_make_book_isCheckOut_to_be_true_when_check_out_success() throws Exception {
-        Book book = library.getBooks().get(0);
-        BibliotecaApp.checkOutBook(library, "book1");
-        assertTrue(book.isCheckOut());
-    }
-
-    @Test
-    public void should_make_state_to_be_command_after_checkout_a_book() throws Exception {
-        app.state = CHECK_OUT_BOOK;
-        BibliotecaApp.checkOutBook(library, "book1");
-        assertEquals(COMMAND, BibliotecaApp.state);
-    }
 
 
 
-    @Test
-    public void should_return_true_without_any_print_when_check_out_success() throws Exception {
-        BibliotecaApp.state = CHECK_OUT_BOOK;
-        assertTrue(BibliotecaApp.checkOutBook(library, "book1"));
-        assertEquals("", outputMonitor.toString());
-    }
 
-    @Test
-    public void should_return_false_without_any_print_when_check_out_failed() throws Exception {
-        BibliotecaApp.state = CHECK_OUT_BOOK;
-        assertFalse(BibliotecaApp.checkOutBook(library, "not exist book"));
-        assertEquals("", outputMonitor.toString());
-    }
+
+
+
+
+
 
     @Test
     public void should_print_successful_message_when_check_out_success() throws Exception {

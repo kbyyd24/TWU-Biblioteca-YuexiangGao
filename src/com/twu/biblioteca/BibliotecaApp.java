@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import static com.twu.biblioteca.config.OptionResultMessage.CHECK_OUT_BOOK_FAIL;
+import static com.twu.biblioteca.config.OptionResultMessage.CHECK_OUT_BOOK_SUCCESS;
 import static com.twu.biblioteca.enums.ConsoleState.*;
 
 public class BibliotecaApp {
@@ -89,7 +91,9 @@ public class BibliotecaApp {
             state = result.getState();
             System.out.println(result.getDisplayMsg());
         } else if (state == CHECK_OUT_BOOK) {
-            printCheckOutResult(checkOutBook(library, input));
+            CommandResult result = checkOutBook(input);
+            state = result.getState();
+            System.out.println(result.getDisplayMsg());
         } else if (state == RETURN_BOOK) {
             printReturnBookResult(returnBook(library, input));
         } else if (state == CHECK_OUT_MOVIE) {
@@ -112,9 +116,11 @@ public class BibliotecaApp {
                 "That book is not available");
     }
 
-    static boolean checkOutBook(BibliotecaLibrary library, String bookName) {
+    CommandResult checkOutBook(String bookName) {
         state = COMMAND;
-        return library.checkOutBook(bookName);
+        String displayMessage = library.checkOutBook(bookName) ?
+                CHECK_OUT_BOOK_SUCCESS : CHECK_OUT_BOOK_FAIL;
+        return new CommandResult(COMMAND, displayMessage);
     }
 
     void printWelcome() {
