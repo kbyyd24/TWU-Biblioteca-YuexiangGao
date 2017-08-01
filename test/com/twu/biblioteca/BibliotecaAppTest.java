@@ -52,21 +52,9 @@ public class BibliotecaAppTest {
         assertEquals(listStr.toString(), outputMonitor.toString());
     }
 
-    @Test
-    public void should_print_book_list_when_choose_list_book_option_and_state_is_command() throws Exception {
-        List<Book> books = library.getBooks();
-        StringBuilder listStr = new StringBuilder();
-        for (int i = 0; i < books.size(); i++) {
-            listStr.append(String.format("%d. %s\n", i + 1, books.get(i).loadDetail()));
-        }
-        BibliotecaApp.parseCommand(library, "1");
-        assertEquals(listStr.toString(), outputMonitor.toString());
-    }
 
-    @Test
-    public void should_return_true_when_option_is_list_book() throws Exception {
-        assertTrue(BibliotecaApp.parseCommand(library, "1"));
-    }
+
+
 
     @Test
     public void should_print_main_menu() throws Exception {
@@ -84,21 +72,11 @@ public class BibliotecaAppTest {
         assertEquals("Select a valid option!\n", outputMonitor.toString());
     }
 
-    @Test
-    public void should_print_invalid_notification_when_choose_an_invalid_option() throws Exception {
-        BibliotecaApp.parseCommand(null, "invalid option");
-        assertEquals("Select a valid option!\n", outputMonitor.toString());
-    }
 
-    @Test
-    public void should_return_true_when_choose_an_invalid_option() throws Exception {
-        assertTrue(BibliotecaApp.parseCommand(null, "invalid option"));
-    }
 
-    @Test
-    public void should_return_false_when_option_is_quit() throws Exception {
-        assertFalse(BibliotecaApp.parseCommand(null, "q"));
-    }
+
+
+
 
     @Test
     public void should_make_book_isCheckOut_to_be_true_when_check_out_success() throws Exception {
@@ -114,13 +92,7 @@ public class BibliotecaAppTest {
         assertEquals(COMMAND, BibliotecaApp.state);
     }
 
-    @Test
-    public void should_change_state_to_be_checkout_when_choose_checkout_option() throws Exception {
-        BibliotecaApp.state = COMMAND;
-        String checkout = "cob";
-        BibliotecaApp.parseCommand(library, checkout);
-        assertEquals(CHECK_OUT_BOOK, BibliotecaApp.state);
-    }
+
 
     @Test
     public void should_return_true_without_any_print_when_check_out_success() throws Exception {
@@ -166,12 +138,7 @@ public class BibliotecaAppTest {
         assertEquals(COMMAND, BibliotecaApp.state);
     }
 
-    @Test
-    public void should_change_state_to_returnBook_when_choose_return_book_option() throws Exception {
-        BibliotecaApp.state = COMMAND;
-        BibliotecaApp.parseCommand(null, "rb");
-        assertEquals(RETURN_BOOK, BibliotecaApp.state);
-    }
+
 
     @Test
     public void should_return_true_without_any_print_when_return_book_success() throws Exception {
@@ -199,24 +166,9 @@ public class BibliotecaAppTest {
         assertEquals("That is not a valid book to return\n", outputMonitor.toString());
     }
 
-    @Test
-    public void should_print_movie_list_without_checked_out_movies() throws Exception {
-        List<Movie> movies = library.getMovies();
-        StringBuilder listStr = new StringBuilder();
-        movies.stream()
-                .filter(movie -> !movie.isCheckOut())
-                .map(Movie::loadDetail)
-                .forEach(detail -> listStr.append(detail).append("\n"));
-        BibliotecaApp.parseCommand(library, "lm");
-        assertEquals(listStr.toString(), outputMonitor.toString());
-    }
 
-    @Test
-    public void should_change_state_to_CHECK_OUT_MOVIE_when_choose_check_out_movie() throws Exception {
-        BibliotecaApp.state = COMMAND;
-        BibliotecaApp.parseCommand(library, "com");
-        assertEquals(CHECK_OUT_MOVIE, BibliotecaApp.state);
-    }
+
+
 
     @Test
     public void should_change_movie_isCheckOut_to_true_when_check_out_movie_success() throws Exception {
@@ -261,12 +213,7 @@ public class BibliotecaAppTest {
         assertEquals("That movie is not available!\n", outputMonitor.toString());
     }
 
-    @Test
-    public void should_change_state_to_RETURN_MOVIE_when_choose_option_return_movie() throws Exception {
-        BibliotecaApp.state = COMMAND;
-        BibliotecaApp.parseCommand(library, "rm");
-        assertEquals(RETURN_MOVIE, BibliotecaApp.state);
-    }
+
 
     @Test
     public void should_return_true_without_anything_printed_when_return_movie_success() throws Exception {
