@@ -13,8 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static com.twu.biblioteca.config.OptionResultMessage.CHECK_OUT_BOOK_FAIL;
-import static com.twu.biblioteca.config.OptionResultMessage.CHECK_OUT_BOOK_SUCCESS;
+import static com.twu.biblioteca.config.OptionResultMessage.*;
 import static com.twu.biblioteca.enums.ConsoleState.*;
 
 public class BibliotecaApp {
@@ -95,7 +94,9 @@ public class BibliotecaApp {
             state = result.getState();
             System.out.println(result.getDisplayMsg());
         } else if (state == RETURN_BOOK) {
-            printReturnBookResult(returnBook(library, input));
+            CommandResult result = returnBook(input);
+            state = result.getState();
+            System.out.println(result.getDisplayMsg());
         } else if (state == CHECK_OUT_MOVIE) {
             printCheckOutMovieResult(checkOutMovie(library, input));
         } else if (state == RETURN_MOVIE) {
@@ -117,10 +118,8 @@ public class BibliotecaApp {
     }
 
     CommandResult checkOutBook(String bookName) {
-        state = COMMAND;
-        String displayMessage = library.checkOutBook(bookName) ?
-                CHECK_OUT_BOOK_SUCCESS : CHECK_OUT_BOOK_FAIL;
-        return new CommandResult(COMMAND, displayMessage);
+        return new CommandResult(COMMAND,
+                library.checkOutBook(bookName) ? CHECK_OUT_BOOK_SUCCESS : CHECK_OUT_BOOK_FAIL);
     }
 
     void printWelcome() {
@@ -134,9 +133,9 @@ public class BibliotecaApp {
                 System.out.println(String.format("%s    %s", key, value)));
     }
 
-    static boolean returnBook(BibliotecaLibrary library, String bookName) {
-        state = COMMAND;
-        return library.returnBook(bookName);
+    CommandResult returnBook(String bookName) {
+        return new CommandResult(COMMAND,
+                library.returnBook(bookName) ? RETURN_BOOK_SUCCESS : RETURN_BOOK_FAIL);
     }
 
     static void printReturnBookResult(boolean result) {

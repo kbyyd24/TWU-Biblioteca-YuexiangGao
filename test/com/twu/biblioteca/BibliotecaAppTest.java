@@ -73,39 +73,15 @@ public class BibliotecaAppTest {
         assertEquals("That book is not available\n", outputMonitor.toString());
     }
 
-    @Test
-    public void should_change_book_isCheckOut_to_be_false_when_return_success() throws Exception {
-        List<Book> books = library.getBooks();
-        Book book = books.get(0);
-        book.setCheckOut(true);
-        BibliotecaApp.returnBook(library, "book1");
-        assertFalse(book.isCheckOut());
-    }
-
-    @Test
-    public void should_change_state_to_command_after_return_book() throws Exception {
-        BibliotecaApp.state = RETURN_BOOK;
-        String bookName = "book1";
-        library.checkOutBook(bookName);
-        BibliotecaApp.returnBook(library, bookName);
-        assertEquals(COMMAND, BibliotecaApp.state);
-    }
 
 
 
-    @Test
-    public void should_return_true_without_any_print_when_return_book_success() throws Exception {
-        String bookName = "book1";
-        library.checkOutBook(bookName);
-        assertTrue(BibliotecaApp.returnBook(library, bookName));
-        assertEquals("", outputMonitor.toString());
-    }
 
-    @Test
-    public void should_return_false_without_any_print_when_return_book_failed() throws Exception {
-        assertFalse(BibliotecaApp.returnBook(library, "book1"));
-        assertEquals("", outputMonitor.toString());
-    }
+
+
+
+
+
 
     @Test
     public void should_print_successful_message_when_return_book_success() throws Exception {
