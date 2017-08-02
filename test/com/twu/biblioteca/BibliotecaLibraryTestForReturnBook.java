@@ -8,10 +8,14 @@ import static org.junit.Assert.*;
 public class BibliotecaLibraryTestForReturnBook {
 
     private BibliotecaLibrary library;
+    private String number;
+    private String password;
 
     @Before
     public void setUp() throws Exception {
         library = new BibliotecaLibrary();
+        number = "000-0001";
+        password = "p1";
     }
 
     @Test
@@ -29,6 +33,7 @@ public class BibliotecaLibraryTestForReturnBook {
 
     @Test
     public void should_return_true_when_return_book_success() throws Exception {
+        library.login(number, password);
         String bookName = "book1";
         library.checkOutBook(bookName);
         assertTrue(library.returnBook(bookName));

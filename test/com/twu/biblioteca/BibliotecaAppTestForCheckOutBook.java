@@ -19,6 +19,7 @@ public class BibliotecaAppTestForCheckOutBook {
     @Before
     public void setUp() throws Exception {
         library = new BibliotecaLibrary();
+        library.login("000-0001", "p1");
         app = new BibliotecaApp(library);
     }
 
