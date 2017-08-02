@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.Movie;
+import com.twu.biblioteca.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,13 @@ public class BibliotecaLibrary {
 
     private List<Book> books;
     private List<Movie> movies;
+    private List<User> users;
+    private User loginUser;
 
     public BibliotecaLibrary() {
         books = buildPreExistingBooks();
         movies = buildPreExistingMovies();
+        users = predifiendUsers();
     }
 
     private List<Book> buildPreExistingBooks() {
@@ -31,6 +35,14 @@ public class BibliotecaLibrary {
         movies.add(new Movie("movie2", 1980, "director2", 9));
         movies.add(new Movie("movie3", 2015, "director3", 2));
         return movies;
+    }
+
+    private List<User> predifiendUsers() {
+        List<User> users = new ArrayList<>();
+        users.add(new User("000-0001", "p1"));
+        users.add(new User("000-0002", "p2"));
+        users.add(new User("000-0003", "p3"));
+        return users;
     }
 
     public boolean checkOutBook(String bookName) {
