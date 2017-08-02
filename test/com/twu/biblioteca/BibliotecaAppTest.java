@@ -39,8 +39,8 @@ public class BibliotecaAppTest {
     public void should_print_main_menu() throws Exception {
         StringBuilder mainMenuBuilder = new StringBuilder(" Main Menu \n");
         mainMenuBuilder.append("command | action\n");
-        app.getMainMenu().forEach((key, value) ->
-                mainMenuBuilder.append(String.format("%s    %s\n", key, value)));
+        app.getMainMenu().forEach(item ->
+                mainMenuBuilder.append(String.format("%s    %s\n", item.getCommand(), item.getOption())));
         app.printMainMenu();
         assertEquals(mainMenuBuilder.toString(), outputMonitor.toString());
     }

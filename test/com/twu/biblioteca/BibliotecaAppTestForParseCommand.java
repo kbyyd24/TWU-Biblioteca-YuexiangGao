@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.enums.ConsoleDisplay;
+import com.twu.biblioteca.enums.MainMenuItem;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.CommandResult;
 import com.twu.biblioteca.model.Movie;
@@ -34,7 +35,7 @@ public class BibliotecaAppTestForParseCommand {
                 .filter(book -> !book.isCheckOut())
                 .map(Book::loadDetail)
                 .forEach(detail -> listStr.append(detail).append('\n'));
-        CommandResult result = app.parseCommand("lb");
+        CommandResult result = app.parseCommand(MainMenuItem.LIST_BOOK.getCommand());
         assertEquals(COMMAND, result.getState());
         assertEquals(listStr.toString(), result.getDisplayMsg());
     }
@@ -42,14 +43,14 @@ public class BibliotecaAppTestForParseCommand {
     @Test
     public void should_return_CHECK_OUT_BOOK_state_and_message_when_choose_check_out_book_option() throws Exception {
         CommandResult expectResult = new CommandResult(CHECK_OUT_BOOK, CHECK_OUT_BOOK_MSG.getMsg());
-        CommandResult result = app.parseCommand("cob");
+        CommandResult result = app.parseCommand(MainMenuItem.CHECK_OUT_BOOK.getCommand());
         assertEquals(expectResult, result);
     }
 
     @Test
     public void should_return_RETURN_BOOK_state_and_message_when_choose_return_book_option() throws Exception {
         CommandResult expectResult = new CommandResult(RETURN_BOOK, RETURN_BOOK_MSG.getMsg());
-        CommandResult result = app.parseCommand("rb");
+        CommandResult result = app.parseCommand(MainMenuItem.RETURN_BOOK.getCommand());
         assertEquals(expectResult, result);
     }
 
@@ -60,7 +61,7 @@ public class BibliotecaAppTestForParseCommand {
                 .filter(movie -> !movie.isCheckOut())
                 .map(Movie::loadDetail)
                 .forEach(detail -> listStr.append(detail).append("\n"));
-        CommandResult result = app.parseCommand("lm");
+        CommandResult result = app.parseCommand(MainMenuItem.LIST_MOVIE.getCommand());
         assertEquals(COMMAND, result.getState());
         assertEquals(listStr.toString(), result.getDisplayMsg());
     }
@@ -68,14 +69,14 @@ public class BibliotecaAppTestForParseCommand {
     @Test
     public void should_return_CHECK_OUT_MOVIE_state_and_message_when_choose_check_out_movie_option() throws Exception {
         CommandResult expectResult = new CommandResult(CHECK_OUT_MOVIE, CHECK_OUT_MOVIE_MSG.getMsg());
-        CommandResult result = app.parseCommand("com");
+        CommandResult result = app.parseCommand(MainMenuItem.CHECK_OUT_MOVIE.getCommand());
         assertEquals(expectResult, result);
     }
 
     @Test
     public void should_return_RETURN_MOVIE_state_and_message_when_choose_return_movie_option() throws Exception {
         CommandResult expectResult = new CommandResult(RETURN_MOVIE, RETURN_MOVIE_MSG.getMsg());
-        CommandResult result = app.parseCommand("rm");
+        CommandResult result = app.parseCommand(MainMenuItem.RETURN_MOVIE.getCommand());
         assertEquals(expectResult, result);
     }
 
@@ -89,7 +90,7 @@ public class BibliotecaAppTestForParseCommand {
     @Test
     public void should_return_QUIT_state_and_message_when_choose_quit_option() throws Exception {
         CommandResult expectResult = new CommandResult(QUIT, ConsoleDisplay.QUIT_MSG.getMsg());
-        CommandResult result = app.parseCommand("q");
+        CommandResult result = app.parseCommand(MainMenuItem.QUIT.getCommand());
         assertEquals(expectResult, result);
     }
 

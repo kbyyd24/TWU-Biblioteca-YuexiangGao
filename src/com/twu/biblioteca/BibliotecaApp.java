@@ -3,21 +3,20 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.command.*;
 import com.twu.biblioteca.config.Welcome;
 import com.twu.biblioteca.enums.ConsoleState;
+import com.twu.biblioteca.enums.MainMenuItem;
 import com.twu.biblioteca.model.CommandResult;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.function.Consumer;
+import java.util.*;
 import java.util.function.Function;
 
 import static com.twu.biblioteca.config.OptionResultMessage.*;
 import static com.twu.biblioteca.enums.ConsoleState.*;
+import static com.twu.biblioteca.enums.MainMenuItem.LIST_BOOK;
 
 public class BibliotecaApp {
 
     private ConsoleState state;
-    private Map<String, String> mainMenu;
+    private List<MainMenuItem> mainMenu;
     private Map<String, Command> optionCommandMap;
     private Map<ConsoleState, Function<String, CommandResult>> parseInputMap;
     private BibliotecaLibrary library;
@@ -25,32 +24,24 @@ public class BibliotecaApp {
     public BibliotecaApp(BibliotecaLibrary library) {
         state = COMMAND;
         this.library = library;
-        mainMenu = buildMainMenuMap();
+        mainMenu = buildMainMenu();
         optionCommandMap = buildOptionCommandMap();
         parseInputMap = buildParseInputMap();
     }
 
-    private Map<String, String> buildMainMenuMap() {
-        Map<String, String> mainMenu = new HashMap<>();
-        mainMenu.put("lb", "List Book");
-        mainMenu.put("cob", "Check Out Book");
-        mainMenu.put("rb", "Return Book");
-        mainMenu.put("lm", "List Movie");
-        mainMenu.put("com", "Check Out Movie");
-        mainMenu.put("rm", "Return Movie");
-        mainMenu.put("q", "Quit");
-        return mainMenu;
+    private List<MainMenuItem> buildMainMenu() {
+        return Arrays.asList(MainMenuItem.values());
     }
 
     private Map<String, Command> buildOptionCommandMap() {
         Map<String, Command> optionComandMap = new HashMap<>();
-        optionComandMap.put("List Book", new ListBookCommand(library.getBooks()));
-        optionComandMap.put("Check Out Book", new CheckOutBookCommand());
-        optionComandMap.put("Return Book", new ReturnBookCommand());
-        optionComandMap.put("List Movie", new ListMovieCommand(library.getMovies()));
-        optionComandMap.put("Check Out Movie", new CheckOutMovieCommand());
-        optionComandMap.put("Return Movie", new ReturnMovieCommand());
-        optionComandMap.put("Quit", new QuitCommand());
+        optionComandMap.put(MainMenuItem.LIST_BOOK.getOption(), new ListBookCommand(library.getBooks()));
+        optionComandMap.put(MainMenuItem.CHECK_OUT_BOOK.getOption(), new CheckOutBookCommand());
+        optionComandMap.put(MainMenuItem.RETURN_BOOK.getOption(), new ReturnBookCommand());
+        optionComandMap.put(MainMenuItem.LIST_MOVIE.getOption(), new ListMovieCommand(library.getMovies()));
+        optionComandMap.put(MainMenuItem.CHECK_OUT_MOVIE.getOption(), new CheckOutMovieCommand());
+        optionComandMap.put(MainMenuItem.RETURN_MOVIE.getOption(), new ReturnMovieCommand());
+        optionComandMap.put(MainMenuItem.QUIT.getOption(), new QuitCommand());
         return optionComandMap;
     }
 
@@ -64,7 +55,7 @@ public class BibliotecaApp {
         return map;
     }
 
-    public Map<String, String> getMainMenu() {
+    public List<MainMenuItem> getMainMenu() {
         return mainMenu;
     }
 
@@ -97,8 +88,11 @@ public class BibliotecaApp {
     }
 
     CommandResult parseCommand(String input) {
-        String option = mainMenu.get(input);
-        option = option == null ? "Invalid Option" : option;
+        String option = mainMenu.stream()
+                .filter(item -> item.getCommand().equals(input))
+                .findFirst()
+                .map(MainMenuItem::getOption)
+                .orElse("Invalid Option");
         return optionCommandMap
                 .compute(option, (key, command) ->
                         command == null ? new InvalidOptionCommand() : command).exec();
@@ -111,8 +105,8 @@ public class BibliotecaApp {
     void printMainMenu() {
         System.out.println(" Main Menu ");
         System.out.println("command | action");
-        mainMenu.forEach((key, value) ->
-                System.out.println(String.format("%s    %s", key, value)));
+        mainMenu.forEach(item ->
+                System.out.println(String.format("%s    %s", item.getCommand(), item.getOption())));
     }
 
     CommandResult checkOutBook(String bookName) {
