@@ -91,11 +91,20 @@ public class BibliotecaLibrary {
     }
 
     public boolean returnMovie(String movieName) {
+        if (loginUser == null) {
+            return false;
+        }
         Optional<Movie> findMovie = movies.stream()
                 .filter(movie -> movie.isCheckOut() && movie.getName().equals(movieName))
                 .findFirst();
-        findMovie.ifPresent(movie -> movie.setCheckOut(false));
-        return findMovie.isPresent();
+        if (findMovie.isPresent()) {
+            Movie movie = findMovie.get();
+            if (loginUser.returnMovie(movie)) {
+                movie.setCheckOut(false);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean login(String libraryNumber, String password) {
