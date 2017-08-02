@@ -44,4 +44,8 @@ public class User {
     public List<Movie> getCheckOutMovies() {
         return checkOutMovies;
     }
+
+    public boolean returnMovie(Movie movie) {
+        return checkOutMovies.remove(movie);
+    }
 }

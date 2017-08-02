@@ -15,23 +15,27 @@ public class UserTest {
         user = new User("000-0001", "password");
     }
 
+    private Book buildBook() {
+        return new Book("bookName", "author", 2016);
+    }
+
     @Test
     public void should_save_book_when_check_out_a_book() throws Exception {
-        Book book = new Book("bookName", "Author", 2016);
+        Book book = buildBook();
         user.checkOutBook(book);
         assertEquals(book, user.getCheckOutBooks().get(0));
     }
 
     @Test
     public void should_return_true_when_return_book_success() throws Exception {
-        Book book = new Book("bookName", "author", 2016);
+        Book book = buildBook();
         user.checkOutBook(book);
         assertTrue(user.returnBook(book));
     }
 
     @Test
     public void should_remove_book_from_checkOutBooks_list_when_return_book_success() throws Exception {
-        Book book = new Book("bookName", "author", 2016);
+        Book book = buildBook();
         user.checkOutBook(book);
         user.returnBook(book);
         assertEquals(emptyList(), user.getCheckOutBooks());
@@ -39,14 +43,39 @@ public class UserTest {
 
     @Test
     public void should_return_false_when_return_book_fail() throws Exception {
-        Book book = new Book("bookName", "author", 2016);
+        Book book = buildBook();
         assertFalse(user.returnBook(book));
+    }
+
+    private Movie buildMovie() {
+        return new Movie("movieName", 2014, "director", 8);
     }
 
     @Test
     public void should_save_movie_when_check_out_a_movie() throws Exception {
-        Movie movie = new Movie("movieName", 2014, "director", 8);
+        Movie movie = buildMovie();
         user.checkOutMovie(movie);
         assertEquals(movie, user.getCheckOutMovies().get(0));
+    }
+
+    @Test
+    public void should_return_true_when_return_movie_success() throws Exception {
+        Movie movie = buildMovie();
+        user.checkOutMovie(movie);
+        assertTrue(user.returnMovie(movie));
+    }
+
+    @Test
+    public void should_remove_movie_from_checkOutMovies_list_when_return_movie_success() throws Exception {
+        Movie movie = buildMovie();
+        user.checkOutMovie(movie);
+        user.returnMovie(movie);
+        assertEquals(emptyList(), user.getCheckOutMovies());
+    }
+
+    @Test
+    public void should_return_false_when_return_movie_fail() throws Exception {
+        Movie movie = buildMovie();
+        assertFalse(user.returnMovie(movie));
     }
 }
