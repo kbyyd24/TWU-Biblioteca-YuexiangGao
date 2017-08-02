@@ -97,7 +97,8 @@ public class BibliotecaApp {
     }
 
     CommandResult parseCommand(String input) {
-        String option = mainMenu.compute(input, (command, opt) -> opt == null ? "Invalid Option" : opt);
+        String option = mainMenu.get(input);
+        option = option == null ? "Invalid Option" : option;
         return optionCommandMap
                 .compute(option, (key, command) ->
                         command == null ? new InvalidOptionCommand() : command).exec();
