@@ -12,5 +12,6 @@ public class OptionResultMessage {
     public static final String RETURN_MOVIE_FAIL = "That is not a valid movie to return.";
     public static final String LOGIN_SUCCESS = "Login success!";
     public static final String LOGIN_FAIL = "Login fail!";
+    public static final String OFFLINE = "You are offline!";
 
 }
