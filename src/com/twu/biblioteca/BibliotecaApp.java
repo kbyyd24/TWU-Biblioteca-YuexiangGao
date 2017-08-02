@@ -137,4 +137,16 @@ public class BibliotecaApp {
                         RETURN_MOVIE_FAIL);
     }
 
+    public CommandResult login(String numberAndPassword) {
+        String[] split = numberAndPassword.split(",");
+        if (split.length != 2) {
+            return new CommandResult(COMMAND, LOGIN_FAIL);
+        }
+        String libraryNumber = split[0];
+        String password = split[1];
+        return new CommandResult(COMMAND,
+                library.login(libraryNumber, password) ?
+                        LOGIN_SUCCESS :
+                        LOGIN_FAIL);
+    }
 }
