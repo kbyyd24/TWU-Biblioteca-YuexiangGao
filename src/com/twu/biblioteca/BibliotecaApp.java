@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.command.*;
 import com.twu.biblioteca.config.Welcome;
+import com.twu.biblioteca.enums.ConsoleDisplay;
 import com.twu.biblioteca.enums.ConsoleState;
 import com.twu.biblioteca.enums.MainMenuItem;
 import com.twu.biblioteca.model.CommandResult;
@@ -10,6 +11,7 @@ import java.util.*;
 import java.util.function.Function;
 
 import static com.twu.biblioteca.config.OptionResultMessage.*;
+import static com.twu.biblioteca.enums.ConsoleDisplay.LOGIN_MSG;
 import static com.twu.biblioteca.enums.ConsoleState.*;
 import static com.twu.biblioteca.enums.MainMenuItem.LIST_BOOK;
 
@@ -41,6 +43,7 @@ public class BibliotecaApp {
         optionComandMap.put(MainMenuItem.LIST_MOVIE.getOption(), new ListMovieCommand(library.getMovies()));
         optionComandMap.put(MainMenuItem.CHECK_OUT_MOVIE.getOption(), new CheckOutMovieCommand());
         optionComandMap.put(MainMenuItem.RETURN_MOVIE.getOption(), new ReturnMovieCommand());
+        optionComandMap.put(MainMenuItem.LOGIN.getOption(), () -> new CommandResult(LOGIN, LOGIN_MSG.getMsg()));
         optionComandMap.put(MainMenuItem.QUIT.getOption(), new QuitCommand());
         return optionComandMap;
     }
@@ -52,6 +55,7 @@ public class BibliotecaApp {
         map.put(RETURN_BOOK, this::returnBook);
         map.put(CHECK_OUT_MOVIE, this::checkOutMovie);
         map.put(RETURN_MOVIE, this::returnMovie);
+        map.put(LOGIN, this::login);
         return map;
     }
 
