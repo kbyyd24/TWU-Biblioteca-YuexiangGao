@@ -12,7 +12,7 @@ public class UserTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new User("000-0001", "password");
+        user = new User("000-0001", "password", "name", "email", "phone");
     }
 
     private Book buildBook() {

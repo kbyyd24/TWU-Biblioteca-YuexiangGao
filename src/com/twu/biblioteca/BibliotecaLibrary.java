@@ -39,9 +39,9 @@ public class BibliotecaLibrary {
 
     private List<User> predifiendUsers() {
         List<User> users = new ArrayList<>();
-        users.add(new User("000-0001", "p1"));
-        users.add(new User("000-0002", "p2"));
-        users.add(new User("000-0003", "p3"));
+        users.add(new User("000-0001", "p1", "user1", "email1", "13397867554"));
+        users.add(new User("000-0002", "p2", "user2", "email2", "18993928302"));
+        users.add(new User("000-0003", "p3", "user3", "email3", "18423479826"));
         return users;
     }
 

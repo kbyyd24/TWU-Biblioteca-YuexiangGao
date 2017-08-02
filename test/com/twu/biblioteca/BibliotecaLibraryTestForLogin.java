@@ -19,7 +19,7 @@ public class BibliotecaLibraryTestForLogin {
     public void should_set_loginUser_when_login_success() throws Exception {
         String libraryNumber = "000-0001";
         String password = "p1";
-        User user = new User(libraryNumber, password);
+        User user = new User(libraryNumber, password, "user1", "email1", "13397867554");
         library.login(libraryNumber, password);
         assertEquals(user, library.getLoginUser());
     }
