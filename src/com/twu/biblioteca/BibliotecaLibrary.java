@@ -33,10 +33,6 @@ public class BibliotecaLibrary {
         return movies;
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
-
     public boolean checkOutBook(String bookName) {
         Optional<Book> findBook = books.stream()
                 .filter(book -> !book.isCheckOut() && book.getName().equals(bookName))
@@ -67,14 +63,6 @@ public class BibliotecaLibrary {
         return findMovie.isPresent();
     }
 
-    public List<Movie> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(List<Movie> movies) {
-        this.movies = movies;
-    }
-
     public boolean returnMovie(String movieName) {
         Optional<Movie> findMovie = movies.stream()
                 .filter(movie -> movie.isCheckOut() && movie.getName().equals(movieName))
@@ -82,4 +70,13 @@ public class BibliotecaLibrary {
         findMovie.ifPresent(movie -> movie.setCheckOut(false));
         return findMovie.isPresent();
     }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
 }
