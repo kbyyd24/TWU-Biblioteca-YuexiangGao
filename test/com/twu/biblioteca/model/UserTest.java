@@ -78,4 +78,10 @@ public class UserTest {
         Movie movie = buildMovie();
         assertFalse(user.returnMovie(movie));
     }
+
+    @Test
+    public void should_return_user_info_string_when_load_user_info() throws Exception {
+        String infoStr = String.format("%s, %s, %s", user.getName(), user.getEmail(), user.getPhone());
+        assertEquals(infoStr, user.loadInfo());
+    }
 }

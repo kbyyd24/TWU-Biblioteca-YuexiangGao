@@ -39,6 +39,10 @@ public class User {
         return checkOutMovies.remove(movie);
     }
 
+    public String loadInfo() {
+        return String.format("%s, %s, %s", name, email, phone);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
