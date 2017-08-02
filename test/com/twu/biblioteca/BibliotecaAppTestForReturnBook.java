@@ -28,8 +28,9 @@ public class BibliotecaAppTestForReturnBook {
     @Test
     public void should_change_book_isCheckOut_to_be_false_when_return_success() throws Exception {
         Book book = library.getBooks().get(0);
-        book.setCheckOut(true);
-        app.returnBook("book1");
+        String bookName = "book1";
+        library.checkOutBook(bookName);
+        app.returnBook(bookName);
         assertFalse(book.isCheckOut());
     }
 

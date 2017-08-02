@@ -60,12 +60,18 @@ public class BibliotecaLibrary {
     }
 
     public boolean returnBook(String bookName) {
+        if (loginUser == null) {
+            return false;
+        }
         Optional<Book> findBook = books.stream()
                 .filter(book -> book.isCheckOut() && book.getName().equals(bookName))
                 .findFirst();
         if (findBook.isPresent()) {
-            findBook.get().setCheckOut(false);
-            return true;
+            Book book = findBook.get();
+            if (loginUser.returnBook(book)) {
+                book.setCheckOut(false);
+                return true;
+            }
         }
         return false;
     }
