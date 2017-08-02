@@ -42,4 +42,11 @@ public class UserTest {
         Book book = new Book("bookName", "author", 2016);
         assertFalse(user.returnBook(book));
     }
+
+    @Test
+    public void should_save_movie_when_check_out_a_movie() throws Exception {
+        Movie movie = new Movie("movieName", 2014, "director", 8);
+        user.checkOutMovie(movie);
+        assertEquals(movie, user.getCheckOutMovies().get(0));
+    }
 }

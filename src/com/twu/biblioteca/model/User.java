@@ -25,6 +25,10 @@ public class User {
         return checkOutBooks.remove(book);
     }
 
+    public void checkOutMovie(Movie movie) {
+        checkOutMovies.add(movie);
+    }
+
     public String getLibraryNumber() {
         return libraryNumber;
     }
@@ -35,5 +39,9 @@ public class User {
 
     public List<Book> getCheckOutBooks() {
         return checkOutBooks;
+    }
+
+    public List<Movie> getCheckOutMovies() {
+        return checkOutMovies;
     }
 }
