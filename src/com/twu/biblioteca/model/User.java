@@ -21,6 +21,10 @@ public class User {
         checkOutBooks.add(book);
     }
 
+    public boolean returnBook(Book book) {
+        return checkOutBooks.remove(book);
+    }
+
     public String getLibraryNumber() {
         return libraryNumber;
     }
