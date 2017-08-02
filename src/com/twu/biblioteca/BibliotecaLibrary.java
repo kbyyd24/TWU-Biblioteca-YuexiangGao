@@ -83,6 +83,15 @@ public class BibliotecaLibrary {
         return findMovie.isPresent();
     }
 
+    public boolean login(String libraryNumber, String password) {
+        Optional<User> findUser = users.stream()
+                .filter(user -> user.getLibraryNumber().equals(libraryNumber))
+                .filter(user -> user.getPassword().equals(password))
+                .findFirst();
+        findUser.ifPresent(user -> loginUser = user);
+        return findUser.isPresent();
+    }
+
     public List<Book> getBooks() {
         return books;
     }
@@ -91,4 +100,7 @@ public class BibliotecaLibrary {
         return movies;
     }
 
+    public User getLoginUser() {
+        return loginUser;
+    }
 }
