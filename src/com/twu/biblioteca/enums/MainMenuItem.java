@@ -8,6 +8,7 @@ public enum MainMenuItem {
     CHECK_OUT_MOVIE("cm", "Check Out Movie"),
     RETURN_MOVIE("rm", "Return Movie"),
     LOGIN("lg", "Login"),
+    LOAD_USER_INFO("ui", "Load User Information"),
     QUIT("qu", "Quit"),
     ;
 

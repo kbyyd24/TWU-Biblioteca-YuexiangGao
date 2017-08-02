@@ -44,6 +44,7 @@ public class BibliotecaApp {
         optionComandMap.put(MainMenuItem.CHECK_OUT_MOVIE.getOption(), new CheckOutMovieCommand());
         optionComandMap.put(MainMenuItem.RETURN_MOVIE.getOption(), new ReturnMovieCommand());
         optionComandMap.put(MainMenuItem.LOGIN.getOption(), new LoginCommand());
+        optionComandMap.put(MainMenuItem.LOAD_USER_INFO.getOption(), new LoadUserInfoCommand(library));
         optionComandMap.put(MainMenuItem.QUIT.getOption(), new QuitCommand());
         return optionComandMap;
     }
