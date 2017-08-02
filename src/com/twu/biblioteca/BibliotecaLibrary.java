@@ -77,10 +77,16 @@ public class BibliotecaLibrary {
     }
 
     public boolean checkOutMovie(String movieName) {
+        if (loginUser == null) {
+            return false;
+        }
         Optional<Movie> findMovie = movies.stream()
                 .filter(movie -> !movie.isCheckOut() && movie.getName().equals(movieName))
                 .findFirst();
-        findMovie.ifPresent(Movie::checkOut);
+        findMovie.ifPresent(movie -> {
+            loginUser.checkOutMovie(movie);
+            movie.checkOut();
+        });
         return findMovie.isPresent();
     }
 
